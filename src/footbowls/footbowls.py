@@ -7,28 +7,32 @@ def get_teams(team_names=None, **kwargs):
     """
     API wrapper for the footbowls API to retrieve team information.
 
-    Parameters:
-    - team_names: string or list, the team name(s) to retrieve information.
-    - kwargs: additional parameters for the API request.
+    Parameters
+    ----------
+    team_names : str or list, optional
+        The team name(s) to retrieve information.
+    kwargs : dict, optional
+        Additional parameters for the API request.
 
-    Returns a pandas dataframe containing the retrieved data.
+    Returns
+    -------
+    pd.DataFrame
+        A pandas DataFrame containing the retrieved data.
 
-    ------
-    Example usage for 'get_teams' function with team names
-    >>>> team_names = ['liverpool', 'Real Madrid', 'manchester united']
-    >>>> teams_df = get_teams(team_names=team_names)
-    >>>> print(teams_df)
-        Team ID          Team Name Team Code                 Team Venue  
-    0       40          Liverpool       LIV                    Anfield   
-    1      541        Real Madrid       REA  Estadio Santiago Bernabéu   
-    2       33  Manchester United       MUN               Old Trafford   
+    Examples
+    --------
+    Example usage for 'get_teams' function with team names:
 
-    Country of Origin  
-    0           England  
-    1             Spain  
-    2           England  
+    >>> team_names = ['Liverpool', 'Real Madrid', 'Manchester United']
+    >>> teams_df = get_teams(team_names=team_names)
+    >>> print(teams_df)
 
+       Team ID          Team Name Team Code                 Team Venue Country of Origin  
+    0       40          Liverpool       LIV                    Anfield          England  
+    1      541        Real Madrid       REA  Estadio Santiago Bernabéu           Spain  
+    2       33  Manchester United       MUN               Old Trafford          England
     """
+
     base_url = "https://api-football-v1.p.rapidapi.com/v3/teams"
 
     load_dotenv()
@@ -77,31 +81,41 @@ def get_teams(team_names=None, **kwargs):
 
 def get_players(parameter_id, season_id=None, **kwargs):
     """
-    API wrapper for the footbowls API to get player information.
+    API wrapper for the footbowls API to retrieve player information.
 
-    Parameters:
-    - parameter_id: string or list, the player ID(s) to retrieve information. (Full player ID list available on the API-Football website)
-    - season_id: int, the ID corresponding to the season (required for 'players' parameter).
-    - kwargs: additional parameters for the API request.
+    Parameters
+    ----------
+    parameter_id : str or list
+        The player ID(s) to retrieve information. (Full player ID list available on the API-Football website)
+    season_id : int, optional
+        The ID corresponding to the season (required for 'players' parameter).
+    kwargs : dict, optional
+        Additional parameters for the API request.
 
-    Returns a pandas dataframe containing the retrieved data.
+    Returns
+    -------
+    pd.DataFrame
+        A pandas DataFrame containing the retrieved data.
 
-    ------
-    Example usage for 'get_players' function with player IDs and Season ID 2022
-    >>>> player_ids = [77, 56, 290] 
-    >>>> players_df = get_players(player_ids, 2014)
-    >>>> print(players_df)
+    Examples
+    --------
+    Example usage for 'get_players' function with player IDs and Season ID 2022:
 
-        Player Name    Position  Total Goals  Nationality  Player DOB  \
-    0          Mats Rits  Midfielder            2      Belgium  1993-07-18   
-    1  Antoine Griezmann    Attacker           22       France  1991-03-21   
-    2    Virgil van Dijk    Defender            4  Netherlands  1991-07-08   
+    >>> player_ids = [77, 56, 290]
+    >>> players_df = get_players(player_ids, 2014)
+    >>> print(players_df)
+
+       Player Name        Position  Total Goals  Nationality  Player DOB  \
+    0  Mats Rits        Midfielder            2      Belgium    1993-07-18   
+    1  Antoine Griezmann  Attacker           22      France     1991-03-21   
+    2  Virgil van Dijk    Defender            4      Netherlands 1991-07-08   
 
     Current Season Team  
     0         KV Mechelen  
-    1     Atletico Madrid  
-    2              Celtic  
+    1         Atletico Madrid  
+    2         Celtic
     """
+
     base_url = "https://api-football-v1.p.rapidapi.com/v3/players"
 
     load_dotenv()
