@@ -168,23 +168,25 @@ def cleague(country):
 
     Parameters
     ----------
-    - country (str): The name of the country for which you want to retrieve football leagues.
+    - country : str
+        The name of the country for which you want to retrieve football leagues.
 
     
     Returns
     -------
-    - pd.DataFrame: A DataFrame containing a list of football leagues for the specified country.
+    pd.DataFrame
+        A DataFrame containing a list of football leagues for the specified country.
 
     
     Examples
     --------
     Example usage for 'cleague' function with country name 'albania':
 
-    >>>> country_name = 'albania'
-    >>>> leagues_df = cleague(country_name)
+    >>> country_name = 'albania'
+    >>> leagues_df = cleague(country_name)
 
-    >>>> if not leagues_df.empty:
-    >>>> print(leagues_df)
+    >>> if not leagues_df.empty:
+    >>> print(leagues_df)
         List of Leagues in albania League ID
     0     2nd Division - Group B    (513,)
     1     2nd Division - Group A    (512,)
