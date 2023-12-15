@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "footbowls"
-version = "0.1.0"
+version = "0.1.1"
 description = "A python package for the API-Football API"
 authors = ["Zhenaya Albertina"]
 license = "MIT"

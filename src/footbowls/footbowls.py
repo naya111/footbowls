@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 def get_teams(team_names=None, **kwargs):
     """
-    API wrapper for the footbowls API to retrieve team information.
+    Function to obtain team information from the API-Football API.
 
     Parameters
     ----------
@@ -81,14 +81,14 @@ def get_teams(team_names=None, **kwargs):
 
 def get_players(parameter_id, season_id=None, **kwargs):
     """
-    API wrapper for the footbowls API to retrieve player information.
+    Function to obtain player information from the API-Football API.
 
     Parameters
     ----------
     parameter_id : str or list
         The player ID(s) to retrieve information. (Full player ID list available on the API-Football website)
     season_id : int, optional
-        The ID corresponding to the season (required for 'players' parameter).
+        The ID corresponding to the season (required for 'players' parameter). Season ID is referring to the year (i.e. 2014, 1997, etc.)
     kwargs : dict, optional
         Additional parameters for the API request.
 
@@ -161,3 +161,67 @@ def get_players(parameter_id, season_id=None, **kwargs):
     df = pd.DataFrame(finding_data)
 
     return df
+
+def cleague(country):
+    """
+    Function to obtain a list of football leagues for a specific country from the API-Football API.
+
+    Parameters
+    ----------
+    - country (str): The name of the country for which you want to retrieve football leagues.
+
+    
+    Returns
+    -------
+    - pd.DataFrame: A DataFrame containing a list of football leagues for the specified country.
+
+    
+    Examples
+    --------
+    Example usage for 'cleague' function with country name 'albania':
+
+    >>>> country_name = 'albania'
+    >>>> leagues_df = cleague(country_name)
+
+    >>>> if not leagues_df.empty:
+    >>>> print(leagues_df)
+        List of Leagues in albania League ID
+    0     2nd Division - Group B    (513,)
+    1     2nd Division - Group A    (512,)
+    2                  Superliga    (310,)
+    3               1st Division    (311,)
+    4                        Cup    (707,)
+    5                  Super Cup    (708,)
+    6   2nd Division - Play-offs    (978,)
+    """
+
+    base_url = "https://api-football-v1.p.rapidapi.com/v3/leagues"
+
+    load_dotenv()
+    key = os.getenv('FOOTBALL_API_KEY')
+    
+    headers = {
+        "X-RapidAPI-Key": key,
+        "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+    }
+
+    querystring = {'country': country}
+    response = requests.get(base_url, headers=headers, params=querystring)
+    finding = response.json()
+
+    if 'response' in finding:
+        finding_data = []
+        for league_info in finding['response']:
+            league_id = league_info['league']['id'],
+            league_name = league_info['league']['name']
+            
+            finding_data.append({
+                f"List of Leagues in {country}": league_name,
+                'League ID': league_id
+            })
+
+        df = pd.DataFrame(finding_data)
+        return df
+    else:
+        print(f"No leagues found for the country: {country}")
+        return pd.DataFrame()

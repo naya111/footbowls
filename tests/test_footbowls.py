@@ -29,6 +29,17 @@ def test_get_players(sample_player_ids, sample_season_id):
     expected_columns = ['Player Name', 'Position', 'Total Goals', 'Nationality', 'Player DOB', 'Current Season Team']
     assert all(column in players_df.columns for column in expected_columns)
 
+@pytest.fixture
+def sample_country():
+    return 'England'
+
+def test_cleague(sample_country):
+    cleague_df = footbowls.cleague(sample_country)
+    assert isinstance(cleague_df, pd.DataFrame)
+
+    expected_columns = [f"List of Leagues in {sample_country}", 'League ID']
+    assert all(column in cleague_df.columns for column in expected_columns)
+
 if __name__ == "__main__":
     pytest.main()
 
